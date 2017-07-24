@@ -1,12 +1,14 @@
 import React from 'react';
 import { getFunName } from '../helpers';
+import { Redirect } from 'react-router';
 
 export default class StorePicker extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      storeName: getFunName()
+      storeName: `store/${getFunName()}`,
+      redirect: null
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -14,17 +16,19 @@ export default class StorePicker extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    console.log('hi');
+    this.setState({ redirect: true });
   }
 
   render(){
     return(
-      <form className="store-selector">
-        <h2>Please Enter a Store</h2>
-        <input type="text" placeholder="Store Name" defaultValue={this.state.storeName}/>
-        <button type="submit" onSubmit={this.handleSubmit}>Visit Store</button>
-      </form>
+      <div>
+        { this.state.redirect ? <Redirect to={this.state.storeName} /> : null }
+        <form className="store-selector" onSubmit={this.handleSubmit}>
+          <h2>Please Enter a Store</h2>
+          <input type="text" placeholder="Store Name" defaultValue={this.state.storeName}/>
+          <button type="submit">Visit Store</button>
+        </form>
+      </div>
     );
   }
 }
