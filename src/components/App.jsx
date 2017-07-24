@@ -3,6 +3,7 @@ import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
 import sampleFishes from '../sample-fishes';
+import Fish from './Fish';
 
 export default class App extends React.Component {
   constructor() {
@@ -34,6 +35,11 @@ export default class App extends React.Component {
       <div className="catch-of-the-day">
         <div className="menu">
           <Header tagline="Fresh Seafood Market"/>
+          <ul className="list-of-fishes">
+            {Object.keys(this.state.fishes).map(key => {
+              return <Fish key={key} details={this.state.fishes[key]}/>
+            })}
+          </ul>
         </div>
         <Order />
         <Inventory addFish={this.addFish} loadSamples={this.loadSamples}/>
